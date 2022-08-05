@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const NoteList = ({ date, title, idm, body, toDel, setToDel }) => {
+const NoteList = ({ date, title, idm, body, toDel, setToDel, isMobile }) => {
     const [isSelected, setIsSelected] = useState(false);
+    const navigate = useNavigate();
 
-    const { ids, type, create } = useParams();
+    const { ids, type } = useParams();
+
+    const handleClick = ()=>{
+        if(idm ===parseInt(ids) || idm ===parseInt(type)){
+            navigate("/")
+        }
+    }
+
     let q = '';
 
     if (ids) {
@@ -17,28 +25,33 @@ const NoteList = ({ date, title, idm, body, toDel, setToDel }) => {
     }
 
     const prepForDel = () => {
-        if(q===""){
-            if (!isSelected) {
-                setToDel([
-                    ...toDel, { id: idm }
-                ])
-            } else {
-                setToDel(toDel.filter(item => item.id !== idm))
+        if ((toDel.length <= 2 || isSelected)) {
+            if(q===""){
+                if (!isSelected) {
+                    if (toDel.length <= 2) {
+                        setToDel([
+                            ...toDel, { id: idm }
+                        ])
+                    }
+                } else {
+                    setToDel(toDel.filter(item => item.id !== idm))
+                }
+                setIsSelected(!isSelected)
             }
-            setIsSelected(!isSelected)
         }
     }
 
     return (
-        <div className={`${isSelected ? "selected" : "li"}`}>
+        <div onDoubleClick={prepForDel} className={`${isSelected ? "selected" : "li"}`} onClick={handleClick}>
             <div className="line"></div>
-            <li onDoubleClick={prepForDel}>
+            <li>
                 <p className="title"><Link to={`/view/${idm}`}>{title}</Link></p>
                 <p className="noteText">{body}</p>
                 <p className="time">{date}</p>
             </li>
+            {isMobile && <input type="checkbox" onChange={prepForDel}/>}
         </div>
     )
 }
 
-export default NoteList
+export default NoteList;

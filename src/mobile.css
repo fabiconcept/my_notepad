@@ -1,0 +1,75 @@
+@media screen and (max-width: 650px) {
+    .notes{
+      padding: .3rem;
+      display: flex;
+      height: 91vh;
+      flex-direction: column;
+      font-size: 1rem;
+      margin: 0 auto;
+    }
+    .notes{
+      padding: .3rem;
+      display: flex;
+      height: 91vh;
+      flex-direction: column;
+      font-size: 1rem;
+      margin: 0 auto;
+    }
+    .view{
+      width: 97vw;
+      height: 100%;
+      display: none;
+      overflow: hidden;
+    }
+    .list{
+      width: 97.25vw;
+    }  
+    .notes .list li p.title{
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+  
+    .notes .list li p.noteText{
+      font-size: .88rem;
+    }
+  
+    .notes .list li p.time{
+      font-size: .75rem;
+    }
+    .finder{
+      padding: 20px;
+    }
+    .addCage{
+      border: 3px solid #fff;
+      position: fixed;
+      bottom: 5%;
+      box-shadow: var(--shadow2);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      background-color: transparent;
+      border-radius: 50%;
+    }
+    
+    .view .takeNotes{
+      font-size: 1.05rem;
+      word-spacing: 5px;
+      margin-top: 10px;
+      text-align: initial;
+      color: var(--text-color);
+      height: 36rem;
+      padding: 30px 20px;
+    }
+    .welcome{
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 5rem;
+      flex-direction: column;
+    }
+  }

@@ -19,7 +19,7 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
         q="type";
         testID = type;
         url = "/edit/"+type;
-    }else if(create){
+    }else if(window.location.pathname === "/create/" || window.location.pathname === "/create"){
         q="create";
         testID = create;
         url = "/create/"+create;
@@ -29,6 +29,7 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
     }
     const viewNote = useSelector(state=>state.currNote.selectedNote);
 
+    // Update the notes page
     function update() {
         setTitle(hooktitle);
         setBody(hookbody);
@@ -36,9 +37,9 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
     }
 
     if (type) {
-        let num=1;
+        let num=0;
         setTimeout(() => {
-            num = 1000;
+            num = 5000;
             update()
         }, num);
     }
@@ -51,9 +52,10 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
     const fullDate = useGetDate();
 
     const [title, setTitle] = useState(`${hookid ? hooktitle : ""}`);
-    const [date, setDate] = useState(`${q ==="type" && hookid ? hooktime : fullDate}`);
+    const [date, setDate] = useState(`${q ==="type" && hookid ? hooktime : fullDate} ${q === "create" && fullDate}`);
     const [body, setBody] = useState(`${hookid ? hookbody : ""}`);
 
+    // Initial dispatch to set notespage
     useEffect(()=>{
         setTitle(hooktitle)
         setBody(hookbody);
@@ -67,13 +69,12 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
     const prevNoteData = {title: hooktitle, body: hookbody};
 
 
+    // Check for changes on the note before update
     useEffect(()=>{
         if (id) {
             const isChangedTitle = currentNoteData.title === prevNoteData.title;
             const isChangedBody = currentNoteData.body === prevNoteData.body;
     
-            console.log({isChangedBody, isChangedTitle});
-
             if (isChangedBody && isChangedTitle) {
                 setNoteSaved(true)
             }else{
@@ -82,18 +83,21 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
         }
     }, [title, body])
 
-
-
+    // Send updated note content to the json server
     const editNote = () => {
-        // setAddData(noteData)
-        // dispatch(addNoteThunk(noteData))
         dispatch(editItem(data, noteData, id ))
         setDidChange((Math.random()*100))
         navigate(`/`);
     }
+
+    // Create new note on the json server
+    const addNote = () => {
+        dispatch(addNoteThunk(noteData))
+        setDidChange((Math.random()*100))
+        navigate(`/`);
+    }
     
-    if(id){
-        console.log({inner: noteSaved});
+    if(q === 'id' || q === 'create'){
         window.addEventListener("beforeunload", e => {
             var confirmationText = "You've not saved this not oh!";
             (e || window.event).returnValue = confirmationText;
@@ -109,8 +113,9 @@ const TakeNotes = ({ data, id, type, create, setDidChange }) => {
             </div>
             <div className="yesText"  style={{display: `${q ? "": "none"}`}}>
                 <div className="date">
-                    {q === "id" && <i className="far fa-check" onClick={editNote}></i>}
-                    {q === "type" && <Link to={url}><i className="far fa-pen"></i></Link> }
+                    {q === "id" && <i className="" onClick={editNote}>save</i>}
+                    {q === "create" && <i className="" onClick={addNote}>create</i>}
+                    {q === "type" && <Link to={url}><i className="">edit</i></Link> }
                     <p>{date}</p>
                 </div>
                 <input type="text" placeholder='Title' disabled={`${q==="type"? "true" : ""}`} className="noteTitle" value={title} onChange={e => setTitle(e.target.value)} />

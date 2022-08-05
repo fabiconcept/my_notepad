@@ -17,12 +17,16 @@
   --off-white-hv: rgb(249, 252, 255);
   --off-white-ac: rgb(210, 232, 255);
   --white: #fff;
-  --date: rgb(28, 76, 209);
+  --date: #1668e8;
   --black: #000;
 }
 
 .hide{
   display: none;
+}
+
+input[type=checkbox]{
+  border: none;
 }
 /* :root{
   --black: #fff;
@@ -69,6 +73,7 @@ body::-webkit-scrollbar{
   background-color: var(--white);
   justify-content: space-between;
   box-shadow: var(--shadow);
+  color: var(--date);
   padding: 1rem 1.5rem;
   border-bottom: 1px solid rgba(189, 189, 189, .1);
 }
@@ -77,6 +82,7 @@ body::-webkit-scrollbar{
   font-weight: 500;
   cursor: pointer;
   font-size: 1.55rem;
+  color: var(--date);
 }
 
 .navArea .links{
@@ -88,7 +94,7 @@ body::-webkit-scrollbar{
 
 .navArea .links span{
   cursor: pointer;
-  font-weight: 410;
+  font-weight: 450;
 }
 
 .navArea .links span:active{
@@ -107,6 +113,13 @@ body::-webkit-scrollbar{
   transition: .25s ease-in-out;
   color: var(--off-white);
   width: 97%;
+}
+
+.titleTop{
+  padding: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 1.1rem;
 }
 
 .finder:focus{
@@ -240,7 +253,7 @@ body::-webkit-scrollbar{
   height: 3.3rem;
   text-decoration: none;
   width: 3.3rem;
-  background-color: rgb(45, 101, 165);
+  background-color: var(--date);
   border-radius: 50%;
   color: #fff;
   font-size: 1.5rem;
@@ -336,7 +349,6 @@ body::-webkit-scrollbar{
 
 a:link, a:hover, a:visited, a{
   text-decoration: none;
-  color: #000;
 }
 
 /* Main Note Taker */
@@ -372,17 +384,14 @@ a:link, a:hover, a:visited, a{
 }
 .date i{
   font-size: 1.35rem;
-  height: 40px;
   border-radius: 50%;
   display: flex;
   color: #fff;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  background-color: rgba(0, 85, 182, 0.575);
   transition: .15s ease;
   cursor: pointer;
-  /* color: rgb(18, 81, 252); */
+  color: var(--date);
 }
 .date i:hover{
   color: rgb(49, 55, 71);
@@ -433,38 +442,137 @@ a:link, a:hover, a:visited, a{
   } 
 }
 
-@media screen and (max-width: 650px) {
-  .notes{
-    padding: .3rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas: "list";
-    gap: 5px;
-    height: 90vh;
-    font-size: 1rem;
-    margin: 0 auto;
-  } 
-  .view{
-    width: 97vw;
-    display: none;
-    overflow: hidden;
-  }
-  .list{
-    width: 97vw;
-  }  
-  .notes .list li p.title{
-    font-size: 1.15rem;
-    font-weight: 700;
-  }
+.welcome{
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-  .notes .list li p.noteText{
-    font-size: .88rem;
-  }
+.carosel{
+  width: 20rem;
+  overflow-y: hidden;
+  overflow-x: auto;
+  display: flex;
+  margin-bottom: 2.5rem;
+  scroll-snap-type: x mandatory;
+}
 
-  .notes .list li p.time{
-    font-size: .75rem;
+.carosel::-webkit-scrollbar{
+  display: none;
+}
+
+.carosel .carosel-card{
+  min-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  width: 100%;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.carosel .carosel-card img{
+  max-width: 100%;
+  margin-bottom: 1.55rem;
+}
+
+.carosel .carosel-card p span:nth-child(1){
+  color: #1668e8;
+}
+.carosel .carosel-card p span:nth-child(2){
+  color: #f44336;
+}
+.carosel .carosel-card p span:nth-child(3){
+  color: #ffb300;
+}
+.carosel .carosel-card p span:nth-child(4){
+  color: #1668e8;
+}
+.carosel .carosel-card p span:nth-child(5){
+  color: #34a853;
+}
+.carosel .carosel-card p span:nth-child(6){
+  color: #f44336;
+}
+
+.continue{
+  border-radius: .5rem;
+  cursor: pointer;
+  background-color: var(--date);
+  color: #fff;
+  padding: 1.1rem 2.5rem;
+  width: 18rem;
+  text-align: center;
+  box-shadow: 0 5px 0 rgb(0, 2, 119);
+}
+
+.continue:active{
+  box-shadow: none;
+  transform: scale(95%);
+  margin-top: 5px;
+}
+
+.makers{
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5rem;
+  position: relative;
+  width: 95px;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.makers div{
+  border-radius: .4rem;
+  height: 5px;
+  width: 20px;
+  background-color: #7a7a7a;
+}
+
+.makers .active-bar{
+  position: absolute;
+  left: 0;
+  background-color: #1668e8;
+  transition: .5s ease-in-out;
+}
+
+@keyframes move2 {
+  0%{
+    left: 0;
   }
-  .finder{
-    padding: 20px;
+  100%{
+    left: 25px;
+  }
+}
+
+@keyframes move3 {
+  0%{
+    left: 25px;
+  }
+  100%{
+    left: 50px;
+  }
+}
+
+@keyframes move4 {
+  0%{
+    left: 50px;
+  }
+  100%{
+    left: 75px;
+  }
+}
+
+@keyframes move-origin {
+  0%{
+    left: 75px;
+  }
+  100%{
+    left: 0px;
   }
 }

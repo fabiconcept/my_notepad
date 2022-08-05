@@ -6,7 +6,7 @@ const NavBar = () => {
     <div className="navArea">
         <Link to="/" className='linked'><div className="logo">Notepro+</div></Link>
         <div className="links">
-            <span>@Username</span>
+            <span>@comrade</span>
         </div>
     </div>
   )
